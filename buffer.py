@@ -38,7 +38,6 @@ async def key_check(key: str) -> str | None:
 
 
 async def list_instagram_channels(key: str) -> dict:
-    """Return only Instagram Business/Creator channels."""
     data = await _graphql(
         "query { account { organizations { id name } } }", {}, key,
     )
@@ -106,6 +105,12 @@ async def create_post(
         "schedulingType": "automatic",
         "mode": mode,
         "assets": assets,
+        "metadata": {
+            "instagram": {
+                "type": "reel",
+                "shouldShareToFeed": True,
+            }
+        },
     }
     if due_at:
         post_input["dueAt"] = due_at
